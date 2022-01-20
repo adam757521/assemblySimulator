@@ -2,9 +2,11 @@
 
 enum TokenType
 {
+    Word,
     Number,
     String,
-    Pointer
+    Pointer,
+    Function
 };
 
 typedef struct

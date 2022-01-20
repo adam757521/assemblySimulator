@@ -1,15 +1,19 @@
 #include <stdio.h>
-#include "list/list.h"
+#include "lexer/token.h"
+#include "lexer/lexer.h"
+#include "errors/errors.h"
 
 int main()
 {
-    list_t list = CreateDynamicList();
-    ListAppend(&list, "Hello");
-    ListAppend(&list, "World");
+    ErrorExit("ERROR: %s.\n", "This program is still under work");
 
-    printf("%s\n", (const char *)list.items[0]);
-    printf("%s\n", (const char *)list.items[1]);
+    list_t tokens = LexLine("mov 1312", 1);
+    for (int i = 0; i < tokens.used; i++) {
+        Token* token = (Token*)tokens.items[i];
+        printf("%d, %d\n", token->type, token->number);
+    }
 
-    ListFree(&list, 0);
+    ListFree(&tokens, 1);
+
     return 0;
 }
