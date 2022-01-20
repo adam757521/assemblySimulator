@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "stream.h"
-#include "../utils.h"
+#include "utils/utils.h"
 
 
 const char* numbers = "0123456789";
@@ -40,7 +40,7 @@ int CharacterStream_UntilNumEnd(CharacterStream_t* stream) {
     return atoi(buffer);
 }
 
-const char* CharacterStream_UntilStringEnd(CharacterStream_t* stream, char* buffer) {
+void CharacterStream_UntilStrEnd(CharacterStream_t* stream, char* buffer) {
     while (!CharacterStream_Done(stream)) {
         char c = CharacterStream_Next(stream);
 
@@ -52,7 +52,6 @@ const char* CharacterStream_UntilStringEnd(CharacterStream_t* stream, char* buff
     }
 
     stream->position--;
-    return buffer;
 }
 
 CharacterStream_t CharacterStream_Create(const char* buffer) {

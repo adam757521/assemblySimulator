@@ -24,16 +24,14 @@ void ListFree(list_t *self, int freeItems)
     }
 
     free(self->items);
-
-    self->items = NULL;
-    self->size = self->used = 0;
+    free(self);
 }
 
-list_t CreateDynamicList()
+list_t* CreateDynamicList()
 {
-    list_t list;
-    list.items = malloc(sizeof(void *));
-    list.size = 1;
-    list.used = 0;
+    list_t* list = malloc(sizeof(list_t));
+    list->items = malloc(sizeof(void *));
+    list->size = 1;
+    list->used = 0;
     return list;
 }

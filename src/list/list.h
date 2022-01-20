@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ASMVM_LIST_H
+#define ASMVM_LIST_H
 
 typedef struct
 {
@@ -9,4 +10,5 @@ typedef struct
 
 void ListAppend(list_t *self, void *item);
 void ListFree(list_t *self, int freeItems);
-list_t CreateDynamicList();
+list_t* CreateDynamicList();
+#endif
