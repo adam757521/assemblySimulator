@@ -4,7 +4,7 @@
 memory_t* Memory_Create(int size) {
     memory_t* memory = malloc(sizeof(memory_t));
     memory->memory = malloc(sizeof(char) * size);
-    memory->usedMemory = calloc(size, sizeof(int) * size);
+    memory->usedMemory = calloc(size, sizeof(int));
     memory->size = size;
     return memory;
 }
