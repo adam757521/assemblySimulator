@@ -21,8 +21,8 @@ typedef struct
         char *string;
         void *pointer;
     };
-} Token;
+} token_t;
 
-void VisualizeToken(Token* token);
-void DestroyToken(Token* token);
+void VisualizeToken(token_t* token);
+void DestroyToken(token_t* token);
 #endif

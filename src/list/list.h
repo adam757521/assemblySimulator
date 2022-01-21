@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #ifndef ASMVM_LIST_H
 #define ASMVM_LIST_H
 

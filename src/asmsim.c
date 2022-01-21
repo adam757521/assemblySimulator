@@ -1,28 +1,10 @@
 #include <stdio.h>
-#include "token/token.h"
 #include "lexer/lexer.h"
 #include "errors/errors.h"
-
-void FreeTokens(list_t* tokens) {
-    // Tokens = list_t* (list_t*) -> list_t* (Token**)
-
-    for (int i = 0; i < tokens->used; i++) {
-        // Get list_t* (Token**)
-        list_t* tokenGroup = (list_t*)tokens->items[i];
-
-        // Free Token**
-        for (int j = 0; j < tokenGroup->used; j++) {
-            // Free Token*
-            DestroyToken(tokenGroup->items[j]);
-        }
-
-        // Free list_t* (Token**)
-        ListFree(tokens->items[i], 0);
-    }
-
-    // Free list_t* (list_t*) -> list_t* (Token**)
-    ListFree(tokens, 0);
-}
+#include "lexer/organizer/organizer.h"
+#include "lexer/function/function.h"
+#include "evaluator/program/program.h"
+#include "evaluator/evaluator.h"
 
 int main(int argc, char** argv)
 {
@@ -40,18 +22,15 @@ int main(int argc, char** argv)
     list_t* tokens = LexFile(file);
     fclose(file);
 
-    for (int i = 0; i < tokens->used; i++)
-    {
-        list_t* token = (list_t*)tokens->items[i];
+    list_t* functions = OrganizeTokens(tokens);
+    ListFree(tokens, 0);
 
-        for (int j = 0; j < token->used; j++)
-        {
-            Token* t = (Token*)token->items[j];
-            VisualizeToken(t);
-        }
-    }
+    program_t program;
+    program.functions = functions;
 
-    FreeTokens(tokens);
+    RunProgram(&program);
+
+    Program_Free(&program);
 
     return 0;
 }

@@ -1,0 +1,4 @@
+#ifndef ASMVM_MEMORY_H
+#define ASMVM_MEMORY_H
+
+#endif //ASMVM_MEMORY_H

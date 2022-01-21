@@ -6,12 +6,12 @@
 #include "stream/stream.h"
 #include "utils/utils.h"
 
-void SetToken(list_t* resultTokens, Token **token, enum TokenType type, char* word) {
+void SetToken(list_t* resultTokens, token_t **token, enum TokenType type, char* word) {
     (*token)->type = type;
 
     word[0] = '\0';
     ListAppend(resultTokens, *token);
-    *token = malloc(sizeof(Token));
+    *token = malloc(sizeof(token_t));
 }
 
 char* CreateCharArrayCpy(char* word) {
@@ -27,7 +27,8 @@ list_t* LexLine(const char *line, int lineNum)
 
     char currentWord[1024] = "";
 
-    Token* currentToken = malloc(sizeof(Token));
+    // TODO: dynamically allocate the token line?
+    token_t* currentToken = malloc(sizeof(token_t));
     currentToken->line = lineNum;
 
     char nextCharacter = CharacterStream_Next(&stream);
@@ -87,7 +88,11 @@ list_t* LexFile(FILE* file)
         lineNum++;
         list_t* tokens = LexLine(line, lineNum);
 
-        ListAppend(resultTokens, tokens);
+        for (int i = 0; i < tokens->used; i++) {
+            ListAppend(resultTokens, tokens->items[i]);
+        }
+
+        ListFree(tokens, 0);
     }
 
     return resultTokens;

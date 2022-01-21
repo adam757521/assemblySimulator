@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "token.h"
 
-void VisualizeToken(Token* token) {
+void VisualizeToken(token_t* token) {
     printf("Token of type %d at line %d, column %d. Value: ", token->type, token->line, token->column);
 
     switch (token->type) {
@@ -19,7 +19,7 @@ void VisualizeToken(Token* token) {
     }
 }
 
-void DestroyToken(Token* token) {
+void DestroyToken(token_t* token) {
     if (token->type == Function || token->type == String || token->type == Word) {
         free(token->string);
     }
