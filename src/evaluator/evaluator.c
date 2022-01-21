@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
-#include "program/program.h"
-#include "function/function.h"
-#include "../errors/errors.h"
+#include "../../include/evaluator/program/program.h"
+#include "../../include/lexer/function/function.h"
+#include "../../include/errors/errors.h"
 
 function_t* FindMainFunction(program_t *program) {
     for (int i = 0; i < program->functions->used; i++) {

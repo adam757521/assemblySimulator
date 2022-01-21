@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "list.h"
+#include "../../include/list/list.h"
 
 void ListAppend(list_t *self, void *item)
 {

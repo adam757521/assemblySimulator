@@ -1,5 +1,5 @@
-#include "token/token.h"
-#include "list.h"
+#include "../token/token.h"
+#include "../../list/list.h"
 
 #ifndef ASMVM_FUNCTION_H
 #define ASMVM_FUNCTION_H

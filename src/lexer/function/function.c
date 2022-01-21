@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include "function.h"
-#include "../utils/utils.h"
+#include "../../../include/lexer/function/function.h"
+#include "../../../include/lexer/utils/utils.h"
 
 void Function_Free(function_t* function) {
     DestroyToken(function->definitionToken);

@@ -1,11 +1,10 @@
 #include <stdio.h>
-#include "lexer/lexer.h"
-#include "errors/errors.h"
-#include "lexer/organizer/organizer.h"
-#include "lexer/function/function.h"
-#include "evaluator/program/program.h"
-#include "evaluator/evaluator.h"
-#include "evaluator/memory/memory.h"
+#include "../include/lexer/lexer.h"
+#include "../include/errors/errors.h"
+#include "../include/lexer/organizer/organizer.h"
+#include "../include/lexer/function/function.h"
+#include "../include/evaluator/program/program.h"
+#include "../include/evaluator/evaluator.h"
 
 int main(int argc, char** argv)
 {

@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include "list.h"
-#include "function/function.h"
+#include "../../../include/list/list.h"
+#include "../../../include/lexer/function/function.h"
 
 list_t* OrganizeTokens(list_t* tokens) {
     // list_t* (function_t*)

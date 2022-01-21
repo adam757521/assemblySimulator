@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "lexer.h"
-#include "token/token.h"
-#include "stream/stream.h"
-#include "utils/utils.h"
+#include "../../include/lexer/lexer.h"
+#include "../../include/lexer/token/token.h"
+#include "../../include/lexer/stream/stream.h"
+#include "../../include/lexer/utils/utils.h"
 
 void SetToken(list_t* resultTokens, token_t **token, enum TokenType type, char* word) {
     (*token)->type = type;

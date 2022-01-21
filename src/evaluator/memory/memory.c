@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "memory.h"
+#include "../../../include/evaluator/memory/memory.h"
 
 memory_t* Memory_Create(int size) {
     memory_t* memory = malloc(sizeof(memory_t));

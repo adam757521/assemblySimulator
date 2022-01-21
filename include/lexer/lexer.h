@@ -1,4 +1,4 @@
-#include "list.h"
+#include "../list/list.h"
 
 #ifndef ASMVM_LEXER_H
 #define ASMVM_LEXER_H

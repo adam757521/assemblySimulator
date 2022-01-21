@@ -1,4 +1,4 @@
-#include "list.h"
+#include "../../list/list.h"
 #include "../memory/memory.h"
 
 #ifndef ASMVM_PROGRAM_H

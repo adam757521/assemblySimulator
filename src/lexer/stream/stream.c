@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
-#include "stream.h"
-#include "utils/utils.h"
+#include "../../../include/lexer/stream/stream.h"
+#include "../../../include/lexer/utils/utils.h"
 
 
 const char* numbers = "0123456789";

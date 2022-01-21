@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "token.h"
+#include "../../../include/lexer/token/token.h"
 
 void VisualizeToken(token_t* token) {
     printf("Token of type %d at line %d, column %d. Value: ", token->type, token->line, token->column);

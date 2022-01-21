@@ -1,6 +1,6 @@
 #include <string.h>
-#include "../list/list.h"
-#include "token/token.h"
+#include "../../../include/list/list.h"
+#include "../../../include/lexer/token/token.h"
 
 void AppendChar(char *str, char c) {
     int len = strlen(str);
