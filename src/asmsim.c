@@ -5,11 +5,13 @@
 #include "lexer/function/function.h"
 #include "evaluator/program/program.h"
 #include "evaluator/evaluator.h"
+#include "evaluator/memory/memory.h"
 
 int main(int argc, char** argv)
 {
     if (argc != 2)
     {
+        // TODO: change this to proper file.
         argv[1] = "../test.asm";
         //ErrorExit("Usage: %s <file>", argv[0]);
     }
@@ -27,6 +29,7 @@ int main(int argc, char** argv)
 
     program_t program;
     program.functions = functions;
+    program.memory = Memory_Create(256);
 
     RunProgram(&program);
 
