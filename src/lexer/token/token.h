@@ -17,7 +17,7 @@ typedef struct
     int column;
     union
     {
-        int number;
+        long long number;
         char *string;
         void *pointer;
     };

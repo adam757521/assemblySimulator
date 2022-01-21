@@ -23,7 +23,7 @@ int CharacterStream_Done(CharacterStream_t* stream) {
     return stream->position >= strlen(stream->buffer);
 }
 
-int CharacterStream_UntilNumEnd(CharacterStream_t* stream) {
+long long CharacterStream_UntilNumEnd(CharacterStream_t* stream) {
     char buffer[1024];
     buffer[0] = '0';  //TODO: find better way of doing this?
 
@@ -37,7 +37,7 @@ int CharacterStream_UntilNumEnd(CharacterStream_t* stream) {
         AppendChar(buffer, c);
     }
 
-    return atoi(buffer);
+    return atoll(buffer);
 }
 
 void CharacterStream_UntilStrEnd(CharacterStream_t* stream, char* buffer) {
