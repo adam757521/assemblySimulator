@@ -14,15 +14,14 @@ int Memory_FindFreeMemory(memory_t* memory, int size) {
     int allocatedMemorySize = 0;
 
     for (int i = 0; i < memory->size; i++) {
-        if (allocatedMemorySize == size) {
-            memoryIndex = i - size;
-            break;
-        }
-
         if (memory->usedMemory[i] != 0) {
             allocatedMemorySize = 0;
         } else {
             allocatedMemorySize++;
+        }
+
+        if (allocatedMemorySize == size) {
+            memoryIndex = i - size + 1;
         }
     }
 
@@ -39,7 +38,7 @@ void* Memory_Malloc(memory_t* memory, int size) {
         return NULL;
     }
 
-    for (int i = 0; i < allocatedMemoryStartIndex; i++) {
+    for (int i = 0; i < size; i++) {
         memory->usedMemory[allocatedMemoryStartIndex + i] = size;
     }
 
