@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "../../../include/evaluator/memory/memory.h"
 
 memory_t* Memory_Create(int size) {
@@ -7,6 +8,13 @@ memory_t* Memory_Create(int size) {
     memory->usedMemory = calloc(size, sizeof(int));
     memory->size = size;
     return memory;
+}
+
+void Memory_PrintMemoryTable(memory_t* memory) {
+    for (int i = 0; i < memory->size; i++) {
+        printf("%d ", memory->memory[i]);
+    }
+    printf("\n");
 }
 
 int Memory_FindFreeMemory(memory_t* memory, int size) {

@@ -8,6 +8,7 @@ typedef struct {
 } memory_t;
 
 memory_t* Memory_Create(int size);
+void Memory_PrintMemoryTable(memory_t* memory);
 int Memory_FindFreeMemory(memory_t* memory, int size);
 void* Memory_Malloc(memory_t* memory, int size);
 void* Memory_Calloc(memory_t* memory, int size, char value);

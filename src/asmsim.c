@@ -23,16 +23,16 @@ int main(int argc, char** argv)
     list_t* tokens = LexFile(file);
     fclose(file);
 
-    list_t* functions = OrganizeTokens(tokens);
+    program_t* program = Program_Create(256, OrganizeTokens(tokens));
     ListFree(tokens, 0);
 
-    program_t program;
-    program.functions = functions;
-    program.memory = Memory_Create(256);
+    for (int i = 0; i < program->registers->used; i++)
+    {
+        printf("%s: %d\n", registers[i], *(int*)program->registers->items[i]);
+    }
 
-    RunProgram(&program);
-
-    Program_Free(&program);
+    RunProgram(program);
+    Program_Free(program);
 
     return 0;
 }
