@@ -50,6 +50,7 @@ list_t* LexLine(const char *line, int lineNum)
 
         char* wordCopy = CreateCharArrayCpy(currentWord);
         currentToken->string = wordCopy;
+        // TODO: SetToken currentToken is already a token?
 
         if (nextCharacter == '"') {
             CharacterStream_UntilStrEnd(&stream, wordCopy);

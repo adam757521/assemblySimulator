@@ -1,10 +1,14 @@
 #include <stdlib.h>
 #include "../../../include/lexer/function/function.h"
 #include "../../../include/lexer/utils/utils.h"
+#include "../../../include/evaluator/instructions/instructions.h"
 
 void Function_Free(function_t* function) {
     DestroyToken(function->definitionToken);
-    FreeTokenList(function->body);
+
+    for (int i = 0; i < function->body->used; i++) {
+        Instruction_Free(function->body->items[i]);
+    }
 
     // Assumes the function is dynamically allocated.
     free(function);

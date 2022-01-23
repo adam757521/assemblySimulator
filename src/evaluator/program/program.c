@@ -1,3 +1,4 @@
+#include <string.h>
 #include "../../../include/evaluator/program/program.h"
 #include "../../../include/lexer/function/function.h"
 
@@ -20,6 +21,20 @@ program_t* Program_Create(int memorySize, list_t* functions) {
     }
 
     return program;
+}
+
+void* Program_GetRegister(program_t* program, token_t* token) {
+    if (token->type != Word) {
+        return NULL;
+    }
+
+    for (int i = 0; i < program->registers->used; i++) {
+        if (strcmp(token->string, registers[i]) == 0) {
+            return program->registers->items[i];
+        }
+    }
+
+    return NULL;
 }
 
 void Program_Free(program_t* program) {

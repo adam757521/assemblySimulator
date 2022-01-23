@@ -26,11 +26,6 @@ int main(int argc, char** argv)
     program_t* program = Program_Create(256, OrganizeTokens(tokens));
     ListFree(tokens, 0);
 
-    for (int i = 0; i < program->registers->used; i++)
-    {
-        printf("%s: %d\n", registers[i], *(int*)program->registers->items[i]);
-    }
-
     RunProgram(program);
     Program_Free(program);
 

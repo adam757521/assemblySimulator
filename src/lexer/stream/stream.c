@@ -25,7 +25,7 @@ int CharacterStream_Done(CharacterStream_t* stream) {
 
 long long CharacterStream_UntilNumEnd(CharacterStream_t* stream) {
     char buffer[1024];
-    buffer[0] = '0';  //TODO: find better way of doing this?
+    buffer[0] = '\0';
 
     while (!CharacterStream_Done(stream)) {
         char c = CharacterStream_Next(stream);

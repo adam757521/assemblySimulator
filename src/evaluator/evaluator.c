@@ -3,6 +3,7 @@
 #include "../../include/evaluator/program/program.h"
 #include "../../include/lexer/function/function.h"
 #include "../../include/errors/errors.h"
+#include "../../include/evaluator/instructions/instructions.h"
 
 function_t* FindMainFunction(program_t *program) {
     for (int i = 0; i < program->functions->used; i++) {
@@ -18,6 +19,12 @@ function_t* FindMainFunction(program_t *program) {
 
 void RunFunction(function_t *function, program_t *program) {
     printf("Running function %s\n", function->definitionToken->string);
+
+    for (int i = 0; i < function->body->used; i++) {
+        instruction_t* instruction = function->body->items[i];
+
+        Instruction_Call(instruction, program);
+    }
 }
 
 void RunProgram(program_t* program) {
