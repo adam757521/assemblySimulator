@@ -7,7 +7,7 @@
 #include "../../../include/lexer/function/function.h"
 #include "../../../include/evaluator/evaluator.h"
 
-const char* instructions[] = {"mov", "mem", "syscall", "call"};
+const char* instructions[] = {"mov", "mem", "syscall", "call", "add", "sub", "cmp"};
 
 instruction_t* Instruction_Create(const char* type) {
     instruction_t* instruction = malloc(sizeof(instruction_t));
@@ -77,6 +77,71 @@ void Instruction_InstructionCall(instruction_t* instruction, program_t* program)
     }
 }
 
+void Instruction_InstructionAdd(instruction_t* instruction, program_t* program) {
+    token_t* dest = instruction->arguments->items[0];
+    token_t* src = instruction->arguments->items[1];
+
+    Assert(dest->type == Word, "ERROR: Destination must be a word.");
+
+    uint64_t* destValue = Program_GetMemoryByToken(program, dest);
+    uint64_t* srcValue = Program_GetMemoryByToken(program, src);
+
+    Assert(destValue != NULL, "ERROR: Destination not found.");
+
+    if (srcValue == NULL) {
+        srcValue = (uint64_t*)&src->number;
+    }
+
+    *destValue += *srcValue;
+}
+
+void Instruction_InstructionSub(instruction_t* instruction, program_t* program) {
+    token_t* dest = instruction->arguments->items[0];
+    token_t* src = instruction->arguments->items[1];
+
+    Assert(dest->type == Word, "ERROR: Destination must be a word.");
+
+    uint64_t* destValue = Program_GetMemoryByToken(program, dest);
+    uint64_t* srcValue = Program_GetMemoryByToken(program, src);
+
+    Assert(destValue != NULL, "ERROR: Destination not found.");
+
+    if (srcValue == NULL) {
+        srcValue = (uint64_t*)&src->number;
+    }
+
+    *destValue -= *srcValue;
+}
+
+void Instruction_InstructionCmp(instruction_t* instruction, program_t* program) {
+    token_t* dest = instruction->arguments->items[0];
+    token_t* src = instruction->arguments->items[1];
+
+    uint64_t* destPtr = Program_GetMemoryByToken(program, dest);
+    uint64_t* srcPtr = Program_GetMemoryByToken(program, src);
+
+    uint64_t destValue = destPtr ? *destPtr : *(uint64_t*)&dest->number;
+    uint64_t srcValue = srcPtr ? *srcPtr : *(uint64_t*)&src->number;
+
+    char* compareFlag = program->registers->items[8];
+    char compareValue;
+
+    if (destValue == srcValue) {
+        compareValue = 0;
+    } else if (destValue > srcValue) {
+        compareValue = 1;
+    } else {
+        compareValue = -1;
+    }
+
+    *compareFlag = compareValue;
+}
+
+void Instruction_InstructionJmp(instruction_t* instruction, program_t* program) {
+    // TODO: Implement another jump system.
+    Instruction_InstructionCall(instruction, program);
+}
+
 void Instruction_Call(instruction_t* instruction, program_t* program) {
     if (strcmp(instruction->type, "mov") == 0) {
         Instruction_InstructionMov(instruction, program);
@@ -86,5 +151,11 @@ void Instruction_Call(instruction_t* instruction, program_t* program) {
         Syscall(program);
     } else if (strcmp(instruction->type, "call") == 0) {
         Instruction_InstructionCall(instruction, program);
+    } else if (strcmp(instruction->type, "add") == 0) {
+        Instruction_InstructionAdd(instruction, program);
+    } else if (strcmp(instruction->type, "sub") == 0) {
+        Instruction_InstructionSub(instruction, program);
+    } else if (strcmp(instruction->type, "cmp") == 0) {
+        Instruction_InstructionCmp(instruction, program);
     }
 }

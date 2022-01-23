@@ -3,7 +3,7 @@
 #include "../../../include/lexer/function/function.h"
 #include "../../../include/errors/errors.h"
 
-const char* registers[] = {"eax", "ebx", "ecx", "edx", "esi", "edi", "ebp", "esp"};
+const char* registers[] = {"eax", "ebx", "ecx", "edx", "esi", "edi", "ebp", "esp", "cf"};
 
 program_t* Program_Create(int memorySize, list_t* functions) {
     program_t* program = malloc(sizeof(program_t));
@@ -22,6 +22,13 @@ program_t* Program_Create(int memorySize, list_t* functions) {
 
         ListAppend(program->registers, reg);
     }
+
+    void* cf = Memory_Malloc(program->memory, 1);
+    if (cf == NULL) {
+        return NULL;
+    }
+
+    ListAppend(program->registers, cf);
 
     return program;
 }
@@ -82,7 +89,7 @@ void* Program_GetMemoryByToken(program_t* program, token_t* token) {
 
 void Program_AddVariable(program_t* program, char* name, int size) {
     void* pointer = Memory_Malloc(program->memory, size);
-    Assert(pointer != NULL, "Could not allocate memory for %s.\n", name);
+    Assert(pointer != NULL, "ERROR: Could not allocate memory for %s.\n", name);
 
     ListAppend(program->variables, name);
     ListAppend(program->variablePointers, pointer);

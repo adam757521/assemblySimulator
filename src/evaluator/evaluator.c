@@ -5,6 +5,7 @@
 #include "../../include/errors/errors.h"
 #include "../../include/evaluator/instructions/instructions.h"
 
+// TODO: Move this function to utils and change to FindFunctionByName.
 function_t* FindMainFunction(program_t *program) {
     for (int i = 0; i < program->functions->used; i++) {
         function_t *function = program->functions->items[i];
