@@ -66,6 +66,10 @@ void* Memory_Calloc(memory_t* memory, int size, char value) {
     return ptr;
 }
 
+int Memory_GetMemorySize(memory_t* memory, void* ptr) {
+    return memory->usedMemory[(int) ((char *) ptr - memory->memory)];
+}
+
 void Memory_Free(memory_t* memory, void* ptr) {
     int index = (int) ((char *) ptr - memory->memory);
     int memorySize = memory->usedMemory[index];

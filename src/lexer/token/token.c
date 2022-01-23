@@ -20,7 +20,8 @@ void VisualizeToken(token_t* token) {
 }
 
 void DestroyToken(token_t* token) {
-    if (token->type == Function || token->type == String || token->type == Word) {
+    if (token->type == Function || token->type == Word) {
+        // TODO: Is this string being freed?
         free(token->string);
     }
 

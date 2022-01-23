@@ -14,5 +14,6 @@ void* Memory_Malloc(memory_t* memory, int size);
 void* Memory_Calloc(memory_t* memory, int size, char value);
 void Memory_Free(memory_t* memory, void* ptr);
 void Memory_FreeAll(memory_t* memory);
+int Memory_GetMemorySize(memory_t* memory, void* ptr);
 
 #endif //ASMVM_MEMORY_H

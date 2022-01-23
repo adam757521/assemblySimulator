@@ -11,10 +11,13 @@ typedef struct {
     list_t* functions;
     memory_t* memory;
     list_t* registers;
+    list_t* variables;
+    list_t* variablePointers;
 } program_t;
 
 program_t* Program_Create(int memorySize, list_t* functions);
 void Program_Free(program_t* program);
 void* Program_GetRegister(program_t* program, token_t* token);
-
+void Program_AddVariable(program_t* program, char* name, int size);
+void* Program_GetMemoryByToken(program_t* program, token_t* token);
 #endif //ASMVM_PROGRAM_H

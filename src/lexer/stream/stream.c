@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "../../../include/lexer/stream/stream.h"
 #include "../../../include/lexer/utils/utils.h"
+#include "../../../include/errors/errors.h"
 
 
 const char* numbers = "0123456789";
@@ -41,17 +42,22 @@ long long CharacterStream_UntilNumEnd(CharacterStream_t* stream) {
 }
 
 void CharacterStream_UntilStrEnd(CharacterStream_t* stream, char* buffer) {
+    int done = 0;
+
     while (!CharacterStream_Done(stream)) {
         char c = CharacterStream_Next(stream);
 
         if (c == '"') {
+            done = 1;
             break;
         }
 
         AppendChar(buffer, c);
     }
 
-    stream->position--;
+    Assert(done, "ERROR: String not closed");
+
+    stream->position++;
 }
 
 CharacterStream_t CharacterStream_Create(const char* buffer) {

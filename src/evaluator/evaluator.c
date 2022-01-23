@@ -18,8 +18,6 @@ function_t* FindMainFunction(program_t *program) {
 }
 
 void RunFunction(function_t *function, program_t *program) {
-    printf("Running function %s\n", function->definitionToken->string);
-
     for (int i = 0; i < function->body->used; i++) {
         instruction_t* instruction = function->body->items[i];
 

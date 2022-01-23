@@ -11,7 +11,7 @@ int main(int argc, char** argv)
     if (argc != 2)
     {
         // TODO: change this to proper file.
-        argv[1] = "../test.asm";
+        argv[1] = "../test1.asm";
         //ErrorExit("Usage: %s <file>", argv[0]);
     }
 
