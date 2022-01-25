@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 #ifndef ASMVM_LEXER_TOKEN_TOKEN_H
 #define ASMVM_LEXER_TOKEN_TOKEN_H
 
@@ -17,7 +19,7 @@ typedef struct
     int column;
     union
     {
-        long long number;
+        uint64_t number;
         char *string;
         void *pointer;
     };

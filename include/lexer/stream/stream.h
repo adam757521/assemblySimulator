@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 #ifndef ASMVM_LEXER_STREAM_H
 #define ASMVM_LEXER_STREAM_H
 
@@ -10,6 +12,6 @@ typedef struct
 extern const char* numbers;
 char CharacterStream_Next(CharacterStream_t *stream);
 CharacterStream_t CharacterStream_Create(const char *buffer);
-long long CharacterStream_UntilNumEnd(CharacterStream_t* stream);
+uint64_t CharacterStream_UntilNumEnd(CharacterStream_t* stream);
 void CharacterStream_UntilStrEnd(CharacterStream_t* stream, char* buffer);
 #endif
