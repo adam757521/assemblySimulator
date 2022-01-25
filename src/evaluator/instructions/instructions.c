@@ -7,7 +7,7 @@
 #include "../../../include/lexer/function/function.h"
 #include "../../../include/evaluator/evaluator.h"
 
-const char* instructions[] = {"mov", "mem", "syscall", "call", "add", "sub", "cmp"};
+const char* instructions[] = {"mov", "mem", "syscall", "call", "add", "sub", "cmp", "jmp", "jle", "inc"};
 
 instruction_t* Instruction_Create(const char* type) {
     instruction_t* instruction = malloc(sizeof(instruction_t));
@@ -138,8 +138,24 @@ void Instruction_InstructionCmp(instruction_t* instruction, program_t* program) 
 }
 
 void Instruction_InstructionJmp(instruction_t* instruction, program_t* program) {
-    // TODO: Implement another jump system.
     Instruction_InstructionCall(instruction, program);
+}
+
+void Instruction_InstructionJle(instruction_t* instruction, program_t* program) {
+    char* compareFlag = program->registers->items[8];
+
+    if (*compareFlag <= 0) {
+        Instruction_InstructionJmp(instruction, program);
+    }
+}
+
+void Instruction_InstructionInc(instruction_t* instruction, program_t* program) {
+    token_t* dest = instruction->arguments->items[0];
+
+    uint64_t* destValue = Program_GetMemoryByToken(program, dest);
+    Assert(destValue != NULL, "ERROR: Destination not found.");
+
+    *destValue += 1;
 }
 
 void Instruction_Call(instruction_t* instruction, program_t* program) {
@@ -157,5 +173,11 @@ void Instruction_Call(instruction_t* instruction, program_t* program) {
         Instruction_InstructionSub(instruction, program);
     } else if (strcmp(instruction->type, "cmp") == 0) {
         Instruction_InstructionCmp(instruction, program);
+    } else if (strcmp(instruction->type, "jmp") == 0) {
+        Instruction_InstructionJmp(instruction, program);
+    } else if (strcmp(instruction->type, "jle") == 0) {
+        Instruction_InstructionJle(instruction, program);
+    } else if (strcmp(instruction->type, "inc") == 0) {
+        Instruction_InstructionInc(instruction, program);
     }
 }
