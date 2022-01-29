@@ -3,6 +3,6 @@
 #ifndef ASMVM_SYSCALLS_H
 #define ASMVM_SYSCALLS_H
 
-void Syscall(program_t* program);
+void Syscall(instruction_t* _, program_t* program);
 
 #endif //ASMVM_SYSCALLS_H

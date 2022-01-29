@@ -1,6 +1,7 @@
 #include <io.h>
 #include <unistd.h>
 #include "../../include/evaluator/program/program.h"
+#include "../../include/evaluator/instructions/instructions.h"
 
 typedef void (*syscall_t)();
 
@@ -22,7 +23,7 @@ void Syscall_Sleep(const int* seconds) {
 
 syscall_t syscallList[] = {(syscall_t) Syscall_Print, (syscall_t) Syscall_Read, (syscall_t) Syscall_Sleep};
 
-void Syscall(program_t* program) {
+void Syscall(instruction_t* _, program_t* program) {
     int* syscall = program->registers->items[0];
     void* arg1 = program->registers->items[1];
     void* arg2 = program->registers->items[2];

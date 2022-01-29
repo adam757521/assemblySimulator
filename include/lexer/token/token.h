@@ -19,7 +19,7 @@ typedef struct
     int column;
     union
     {
-        uint64_t number;
+        int64_t number;
         char *string;
         void *pointer;
     };

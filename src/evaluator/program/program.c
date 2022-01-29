@@ -39,7 +39,10 @@ void* Program_GetRegister(program_t* program, token_t* token) {
     }
 
     for (int i = 0; i < program->registers->used; i++) {
-        if (strcmp(token->string, registers[i]) == 0) {
+        char* tokenString = token->string;
+        const char* registerString = registers[i];
+
+        if (strcmp(tokenString, registerString) == 0) {
             return program->registers->items[i];
         }
     }
@@ -85,6 +88,24 @@ void* Program_GetMemoryByToken(program_t* program, token_t* token) {
     }
 
     return NULL;
+}
+
+int64_t Program_GetMemoryValue(program_t* program, void* ptr) {
+    if (ptr == NULL) {
+        return 0;
+    }
+
+    int64_t value;
+    memcpy(&value, ptr, Memory_GetMemorySize(program->memory, ptr));
+    return value;
+}
+
+void Program_SetMemoryValue(program_t* program, void* ptr, int64_t value) {
+    if (ptr == NULL) {
+        return;
+    }
+
+    memcpy(ptr, &value, Memory_GetMemorySize(program->memory, ptr));
 }
 
 void Program_AddVariable(program_t* program, char* name, int size) {

@@ -41,6 +41,7 @@ list_t* LexLine(const char *line, int lineNum)
         }
 
         if (strchr(numbers, nextCharacter) != NULL) {
+            // TODO: fix signed/unsigned
             stream.position--;
 
             currentToken->number = CharacterStream_UntilNumEnd(&stream);

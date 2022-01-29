@@ -40,9 +40,9 @@ char CharacterStream_Next(CharacterStream_t* stream) {
 /*
  * Returns the next full number from the stream.
  * @param CharacterStream_t* stream - the stream to read from.
- * @return uint64_t - the next full number from the stream.
+ * @return int64_t - the next full number from the stream.
  */
-uint64_t CharacterStream_UntilNumEnd(CharacterStream_t* stream) {
+int64_t CharacterStream_UntilNumEnd(CharacterStream_t* stream) {
     // Creates a buffer for the number.
     char buffer[1024];
     buffer[0] = '\0';
@@ -59,7 +59,7 @@ uint64_t CharacterStream_UntilNumEnd(CharacterStream_t* stream) {
         AppendChar(buffer, c);
     }
 
-    // Converts the buffer to uint64_t.
+    // Converts the buffer to int64_t.
     return atoll(buffer);
 }
 
