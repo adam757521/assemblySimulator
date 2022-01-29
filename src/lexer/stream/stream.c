@@ -63,25 +63,41 @@ int64_t CharacterStream_UntilNumEnd(CharacterStream_t* stream) {
     return atoll(buffer);
 }
 
+/*
+ * Returns the next full string from the stream.
+ * @param CharacterStream_t* stream - the stream to read from.
+ * @param char* buffer - the buffer to store the string in.
+ * @return void.
+ */
 void CharacterStream_UntilStrEnd(CharacterStream_t* stream, char* buffer) {
+    // Creates a boolean representing if the string is closed.
     int done = 0;
 
     while (!CharacterStream_Done(stream)) {
+        // Gets the next character from the stream.
         char c = CharacterStream_Next(stream);
 
+        // Checks if the character is a quote, if it is, break and set done to 1 (true).
         if (c == '"') {
             done = 1;
             break;
         }
 
+        // Append the character to the buffer.
         AppendChar(buffer, c);
     }
 
+    // If the string is not closed, throw an error.
     Assert(done, "ERROR: String not closed");
 
     stream->position++;
 }
 
+/*
+ * Creates a new CharacterStream_t.
+ * @param const char* buffer - the buffer to read from.
+ * @return CharacterStream_t* - the new CharacterStream_t.
+ */
 CharacterStream_t CharacterStream_Create(const char* buffer) {
     CharacterStream_t stream;
     stream.buffer = buffer;

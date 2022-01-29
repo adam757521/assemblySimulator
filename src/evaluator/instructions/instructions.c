@@ -51,17 +51,17 @@ void Instruction_InstructionMem(instruction_t* instruction, program_t* program) 
     token_t* variableName = instruction->arguments->items[0];
     token_t* variableSize = instruction->arguments->items[1];
 
-    int64_t* size = NULL;
+    int64_t size = 0;
     if (variableSize->type == Word) {
-        size = Program_GetMemoryByToken(program, variableSize);
+        size = Program_GetMemoryValue(program, Program_GetMemoryByToken(program, variableSize));
     } else if (variableSize->type == Number) {
-        size = (int64_t*)&variableSize->number;
+        size = variableSize->number;
     }
 
     Assert(variableName->type == Word, "ERROR: Variable name must be a word.");
-    Assert(size != NULL, "ERROR: Variable size must be a number.");
+    Assert(size != 0, "ERROR: Variable size must be a number.");
 
-    Program_AddVariable(program, variableName->string, (int)*size);
+    Program_AddVariable(program, variableName->string, (int)size);
 }
 
 void Instruction_InstructionCall(instruction_t* instruction, program_t* program) {
@@ -83,17 +83,15 @@ void Instruction_InstructionAdd(instruction_t* instruction, program_t* program) 
 
     Assert(dest->type == Word, "ERROR: Destination must be a word.");
 
-    int64_t* destValue = Program_GetMemoryByToken(program, dest);
-    int64_t* srcValue = Program_GetMemoryByToken(program, src);
-    // TODO: make this safe.
+    void* destPtr = Program_GetMemoryByToken(program, dest);
+    void* srcPtr = Program_GetMemoryByToken(program, src);
 
-    Assert(destValue != NULL, "ERROR: Destination not found.");
+    Assert(destPtr != NULL, "ERROR: Destination not found.");
 
-    if (srcValue == NULL) {
-        srcValue = (int64_t*)&src->number;
-    }
+    int64_t destValue = Program_GetMemoryValue(program, destPtr);
+    int64_t srcValue = srcPtr ? Program_GetMemoryValue(program, srcPtr) : src->number;
 
-    *destValue += *srcValue;
+    Program_SetMemoryValue(program, destPtr, destValue + srcValue);
 }
 
 void Instruction_InstructionSub(instruction_t* instruction, program_t* program) {
@@ -102,16 +100,15 @@ void Instruction_InstructionSub(instruction_t* instruction, program_t* program) 
 
     Assert(dest->type == Word, "ERROR: Destination must be a word.");
 
-    int64_t* destValue = Program_GetMemoryByToken(program, dest);
-    int64_t* srcValue = Program_GetMemoryByToken(program, src);
+    void* destPtr = Program_GetMemoryByToken(program, dest);
+    void* srcPtr = Program_GetMemoryByToken(program, src);
 
-    Assert(destValue != NULL, "ERROR: Destination not found.");
+    Assert(destPtr != NULL, "ERROR: Destination not found.");
 
-    if (srcValue == NULL) {
-        srcValue = (int64_t*)&src->number;
-    }
+    int64_t destValue = Program_GetMemoryValue(program, destPtr);
+    int64_t srcValue = srcPtr ? Program_GetMemoryValue(program, srcPtr) : src->number;
 
-    *destValue -= *srcValue;
+    Program_SetMemoryValue(program,destPtr,destValue - srcValue);
 }
 
 void Instruction_InstructionCmp(instruction_t* instruction, program_t* program) {
@@ -155,7 +152,7 @@ void Instruction_InstructionInc(instruction_t* instruction, program_t* program) 
     void* destValue = Program_GetMemoryByToken(program, dest);
     Assert(destValue != NULL, "ERROR: Destination not found.");
 
-    // Safe set memory
+    // Safely set memory.
     // (can also dereference the pointer with a pointer pointing to an int64_t but that can write to the wrong memory)
     Program_SetMemoryValue(program, destValue, Program_GetMemoryValue(program, destValue) + 1);
 }
