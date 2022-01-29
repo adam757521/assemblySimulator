@@ -7,8 +7,8 @@
 #include "../../../include/lexer/function/function.h"
 #include "../../../include/evaluator/evaluator.h"
 
-typedef void(*instruction_f)(instruction_t*, program_t*);
-const char* instructions[] = {"mov", "mem", "syscall", "call", "add", "sub", "cmp", "jmp", "jle", "inc"};
+typedef void (*instruction_f)(instruction_t*, program_t*);
+const char* instructions[] = {"mov", "mem", "syscall", "call", "add", "sub", "cmp", "jmp", "jle", "inc", "div"};
 
 instruction_t* Instruction_Create(const char* type) {
     instruction_t* instruction = malloc(sizeof(instruction_t));
@@ -111,6 +111,23 @@ void Instruction_InstructionSub(instruction_t* instruction, program_t* program) 
     Program_SetMemoryValue(program,destPtr,destValue - srcValue);
 }
 
+void Instruction_InstructionDiv(instruction_t* instruction, program_t* program) {
+    token_t* dest = instruction->arguments->items[0];
+    token_t* src = instruction->arguments->items[1];
+
+    Assert(dest->type == Word, "ERROR: Destination must be a word.");
+
+    void* destPtr = Program_GetMemoryByToken(program, dest);
+    void* srcPtr = Program_GetMemoryByToken(program, src);
+
+    Assert(destPtr != NULL, "ERROR: Destination not found.");
+
+    int64_t destValue = Program_GetMemoryValue(program, destPtr);
+    int64_t srcValue = srcPtr ? Program_GetMemoryValue(program, srcPtr) : src->number;
+
+    Program_SetMemoryValue(program, destPtr, destValue / srcValue);
+}
+
 void Instruction_InstructionCmp(instruction_t* instruction, program_t* program) {
     token_t* dest = instruction->arguments->items[0];
     token_t* src = instruction->arguments->items[1];
@@ -167,7 +184,8 @@ const instruction_f instruction_functions[] = {
         Instruction_InstructionCmp,
         Instruction_InstructionJmp,
         Instruction_InstructionJle,
-        Instruction_InstructionInc
+        Instruction_InstructionInc,
+        Instruction_InstructionDiv
 };
 
 void Instruction_Call(instruction_t* instruction, program_t* program) {

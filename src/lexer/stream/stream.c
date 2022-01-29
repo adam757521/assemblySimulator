@@ -83,8 +83,19 @@ void CharacterStream_UntilStrEnd(CharacterStream_t* stream, char* buffer) {
             break;
         }
 
-        // Append the character to the buffer.
-        AppendChar(buffer, c);
+        if (c == '\\') {
+            // Gets the next character from the stream.
+            c = CharacterStream_Next(stream);
+
+            if (c == 'n') {
+                c = '\n';
+            }
+        }
+
+        // Append the character to the buffer if it is not \0.
+        if (c != '\0') {
+            AppendChar(buffer, c);
+        }
     }
 
     // If the string is not closed, throw an error.
