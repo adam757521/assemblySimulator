@@ -50,7 +50,9 @@ list_t* LexLine(const char *line, int lineNum)
             }
 
             SetToken(resultTokens, &currentToken, Number, currentWord);
-            break;
+
+            nextCharacter = CharacterStream_Next(&stream);
+            continue;
         }
 
         char* wordCopy = CreateCharArrayCpy(currentWord);

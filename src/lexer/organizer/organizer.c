@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include "../../../include/list/list.h"
 #include "../../../include/lexer/function/function.h"
 #include "../../../include/evaluator/instructions/instructions.h"

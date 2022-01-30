@@ -1,0 +1,5 @@
+main:
+mem string 13
+mov string "Hello, World\n"
+
+syscall 0 1 string 13

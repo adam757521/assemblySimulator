@@ -5,6 +5,11 @@
 
 const char* registers[] = {"eax", "ebx", "ecx", "edx", "esi", "edi", "ebp", "esp", "cf"};
 
+inline void* Program_GetMemory(program_t* program, token_t* token) {
+    void* memory = Program_GetMemoryByToken(program, token);
+    return memory ? memory : &token->pointer;
+}
+
 program_t* Program_Create(size_t memorySize, list_t* functions) {
     program_t* program = malloc(sizeof(program_t));
 
