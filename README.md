@@ -18,10 +18,7 @@ Examples
 A traditional "Hello, World" program.
 ```asm
 main:
-mem string 13
-mov string "Hello, World\n"
-
-syscall 0 1 string 13
+syscall 0 1 "Hello, World\n" 13
 ```
 
 Note
