@@ -10,8 +10,19 @@
 
 Disclaimer
 -------------
-This project is current work in progress and I am creating it in order to learn C.
+This project is current work in progress and I am creating it in order to learn C (and have fun).
 `If you like this project, please consider giving it a star! <3`
+
+Examples
+-------------
+A traditional "Hello, World" program.
+```asm
+main:
+mem string 13
+mov string "Hello, World\n"
+
+syscall 0 1 string 13
+```
 
 Note
 -------------
