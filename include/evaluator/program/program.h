@@ -15,7 +15,7 @@ typedef struct {
     list_t* variablePointers;
 } program_t;
 
-program_t* Program_Create(int memorySize, list_t* functions);
+program_t* Program_Create(size_t memorySize, list_t* functions);
 void Program_Free(program_t* program);
 void* Program_GetRegister(program_t* program, token_t* token);
 void Program_AddVariable(program_t* program, char* name, int size);

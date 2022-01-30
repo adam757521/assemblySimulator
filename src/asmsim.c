@@ -8,7 +8,7 @@
 
 int main(int argc, char** argv)
 {
-    argv[1] = "../test1.asm";
+    argv[1] = "../test2.asm";
 
     if (argc < 2)
     {

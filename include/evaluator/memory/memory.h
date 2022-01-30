@@ -3,17 +3,17 @@
 
 typedef struct {
     char* memory;
-    int* usedMemory;
-    int size;
+    size_t* usedMemory;
+    size_t size;
 } memory_t;
 
-memory_t* Memory_Create(int size);
+memory_t* Memory_Create(size_t size);
 void Memory_PrintMemoryTable(memory_t* memory);
-int Memory_FindFreeMemory(memory_t* memory, int size);
-void* Memory_Malloc(memory_t* memory, int size);
-void* Memory_Calloc(memory_t* memory, int size, char value);
+size_t Memory_FindFreeMemory(memory_t* memory, size_t size);
+void* Memory_Malloc(memory_t* memory, size_t size);
+void* Memory_Calloc(memory_t* memory, size_t size, char value);
 void Memory_Free(memory_t* memory, void* ptr);
 void Memory_FreeAll(memory_t* memory);
-int Memory_GetMemorySize(memory_t* memory, void* ptr);
+size_t Memory_GetMemorySize(memory_t* memory, void* ptr);
 
 #endif //ASMVM_MEMORY_H

@@ -2,10 +2,11 @@
 #include <stdio.h>
 #include "../../../include/evaluator/memory/memory.h"
 
-memory_t* Memory_Create(int size) {
+memory_t* Memory_Create(size_t size) {
+    // TODO: Optimize usedMemory.
     memory_t* memory = malloc(sizeof(memory_t));
     memory->memory = malloc(sizeof(char) * size);
-    memory->usedMemory = calloc(size, sizeof(int));
+    memory->usedMemory = calloc(size, sizeof(size_t));
     memory->size = size;
     return memory;
 }
@@ -17,9 +18,9 @@ void Memory_PrintMemoryTable(memory_t* memory) {
     printf("\n");
 }
 
-int Memory_FindFreeMemory(memory_t* memory, int size) {
-    int memoryIndex = -1;
-    int allocatedMemorySize = 0;
+size_t Memory_FindFreeMemory(memory_t* memory, size_t size) {
+    size_t memoryIndex = -1;
+    size_t allocatedMemorySize = 0;
 
     for (int i = 0; i < memory->size; i++) {
         if (memory->usedMemory[i] != 0) {
@@ -36,12 +37,12 @@ int Memory_FindFreeMemory(memory_t* memory, int size) {
     return memoryIndex;
 }
 
-void* Memory_Malloc(memory_t* memory, int size) {
+void* Memory_Malloc(memory_t* memory, size_t size) {
     if (size > memory->size) {
         return NULL;
     }
 
-    int allocatedMemoryStartIndex = Memory_FindFreeMemory(memory, size);
+    size_t allocatedMemoryStartIndex = Memory_FindFreeMemory(memory, size);
     if (allocatedMemoryStartIndex == -1) {
         return NULL;
     }
@@ -53,7 +54,7 @@ void* Memory_Malloc(memory_t* memory, int size) {
     return memory->memory + allocatedMemoryStartIndex;
 }
 
-void* Memory_Calloc(memory_t* memory, int size, char value) {
+void* Memory_Calloc(memory_t* memory, size_t size, char value) {
     char* ptr = Memory_Malloc(memory, size);
     if (ptr == NULL) {
         return NULL;
@@ -66,13 +67,13 @@ void* Memory_Calloc(memory_t* memory, int size, char value) {
     return ptr;
 }
 
-int Memory_GetMemorySize(memory_t* memory, void* ptr) {
+size_t Memory_GetMemorySize(memory_t* memory, void* ptr) {
     return memory->usedMemory[(int) ((char *) ptr - memory->memory)];
 }
 
 void Memory_Free(memory_t* memory, void* ptr) {
     int index = (int) ((char *) ptr - memory->memory);
-    int memorySize = memory->usedMemory[index];
+    size_t memorySize = memory->usedMemory[index];
 
     for (int i = 0; i < memorySize; i++) {
         memory->usedMemory[index + i] = 0;

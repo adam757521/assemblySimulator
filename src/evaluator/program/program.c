@@ -5,7 +5,7 @@
 
 const char* registers[] = {"eax", "ebx", "ecx", "edx", "esi", "edi", "ebp", "esp", "cf"};
 
-program_t* Program_Create(int memorySize, list_t* functions) {
+program_t* Program_Create(size_t memorySize, list_t* functions) {
     program_t* program = malloc(sizeof(program_t));
 
     program->functions = functions;
